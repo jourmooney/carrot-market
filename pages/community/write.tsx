@@ -16,12 +16,13 @@ interface WriteResponse {
   ok: boolean;
   post: Post;
 }
+
 const Write: NextPage = () => {
   const router = useRouter();
   const { register, handleSubmit } = useForm<WriteForm>();
   const [post, { loading, data }] = useMutation<WriteResponse>("/api/posts");
   const onValid = (data: WriteForm) => {
-    if (loading) return; // 유저가 여러번 클릭하는 걸 막기 위해
+    if (loading) return;
     post(data);
   };
   useEffect(() => {
@@ -31,7 +32,7 @@ const Write: NextPage = () => {
   }, [data, router]);
   return (
     <Layout canGoBack title="Write Post">
-      <form onSubmit={handleSubmit(onValid)} className="space-y-4 p-4">
+      <form onSubmit={handleSubmit(onValid)} className="p-4 space-y-4">
         <TextArea
           register={register("question", { required: true, minLength: 5 })}
           required

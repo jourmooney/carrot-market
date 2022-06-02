@@ -13,19 +13,19 @@ datasource db {
 }
 
 model User {
-  id          Int         @id @default(autoincrement())
-  phone       String?     @unique
-  email       String?     @unique
-  name        String
-  avatar      String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  tokens      Token[]
-  products    Product[]
-  favs        Fav[]
-  posts       Post[]
-  answers     Answer[]
-  curiosities Curiosity[]
+  id         Int         @id @default(autoincrement())
+  phone      String?     @unique
+  email      String?     @unique
+  name       String
+  avatar     String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  tokens     Token[]
+  products   Product[]
+  fav        Fav[]
+  posts      Post[]
+  answers    Answer[]
+  wonderings Wondering[]
 }
 
 model Token {
@@ -61,14 +61,14 @@ model Fav {
 }
 
 model Post {
-  id          Int         @id @default(autoincrement())
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
-  question    String      @db.MediumText
-  answers     Answer[]
-  curiosities Curiosity[]
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  question  String      @db.MediumText
+  answers   Answer[]
+  wondering Wondering[]
 }
 
 model Answer {
@@ -79,10 +79,10 @@ model Answer {
   userId    Int
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
-  answer    String
+  answer    String   @db.MediumText
 }
 
-model Curiosity {
+model Wondering {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
