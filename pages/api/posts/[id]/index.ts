@@ -9,6 +9,7 @@ async function handler(
 ) {
   const {
     query: { id },
+    session: { user },
   } = req;
   const post = await client.post.findUnique({
     where: { id: +id.toString() },
@@ -41,9 +42,21 @@ async function handler(
       },
     },
   });
+  const isCuriosity = Boolean(
+    await client.curiosity.findFirst({
+      where: {
+        postId: +id.toString(),
+        userId: user?.id,
+      },
+      select: {
+        id: true,
+      },
+    })
+  );
   res.json({
     ok: true,
     post,
+    isCuriosity,
   });
 }
 
